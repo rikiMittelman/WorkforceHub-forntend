@@ -1,0 +1,27 @@
+#name{
+    width: 150px;
+    border: 2px solid #26004d;
+    width: 250px;
+    height: 40px;
+    align-items: center;
+    margin-top: 5%;
+    border-radius: 5%;
+    
+}
+#id{
+    width: 150px;
+    border: 2px solid #26004d;
+    width: 250px;
+    height: 40px;
+    margin-top: 3%;
+}
+#login{
+    margin-left:75%
+    
+}
+#buttons{
+    align-items: center;
+    /* display:  flex; */
+    /* margin-bottom: 10px; */
+    margin-left: 15%;
+}

@@ -2,20 +2,25 @@ export interface Employee {
     id: number;
     firstName: string;
     lastName: string;
-    identity: number;
+    identity: string;
     startWorkDate: Date;
     dateOfBirth: Date;
-    gender: 'Male' | 'Female';
-    roles: Role[];
-    status: 'Active' | 'Inactive';
+    gender: Gender;
+    roles: EmployeeRole[];
+    status: boolean;
+  }
+
+  export enum Gender{
+    Male =1,
+    Female =2
   }
   
 export interface EmployeeRole {
-    employeeId: number;
-    role: string;
+    role: Role;
     managementStatus: boolean;
     entryDate: Date;
   }
+
 export interface Role {
   roleId: number,
   roleName: string

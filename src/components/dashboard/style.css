@@ -1,0 +1,14 @@
+/* body{
+    background-image:url('../../public/assets/background.jpg') ;
+} */
+.table-wrapper {
+    width: 1000px; /* Set the desired width */
+    margin: 0 auto; /* Center the container horizontally */
+    justify-content: center; /* Center the table horizontally */
+    align-items: center; /* Center the table vertically */
+  }
+  
+  .MuiToolbar-root{
+    justify-content: center; /* Center the table horizontally */
+    align-items: center; 
+  }

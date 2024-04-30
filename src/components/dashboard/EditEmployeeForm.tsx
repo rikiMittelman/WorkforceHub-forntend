@@ -56,11 +56,31 @@ const FormValidationEdit: React.FC = () => {
 
     const validateFormData = (data: FormData) => {
         let errors: Partial<FormData> = {};
-        if (!data.firstName) errors.firstName = 'First name is required';
+        const nameRegex = /^[A-Za-z]+$/;
+        const digitsRegex = /^\d+$/;
+        if (!data.firstName) {errors.firstName = 'First name is required';}
+        else if(!nameRegex.test(data.firstName)){ errors.firstName = 'First name should contain only letters';}
+        
         if (!data.lastName) errors.lastName = 'Last name is required';
-        if (!data.identity) errors.identity = 'Identity is required';
+        else if(!nameRegex.test(data.lastName)){ errors.lastName = 'Last name should contain only letters';}
+        
+        if (!data.identity){ errors.identity = 'Identity is required';}
+        else if(!digitsRegex.test(data.identity)){errors.identity = 'Identity should contain only digits';}
+        else if(data.identity.length !== 9){ errors.identity = 'Identity should be exactly 9 digits long';}
+
         if (!data.startWorking) errors.startWorking = 'Start working date is required';
-        if (!data.dateOfBirth) errors.dateOfBirth = 'Date of birth is required';
+        
+        if (!data.dateOfBirth) {errors.dateOfBirth = 'Date of birth is required';}
+        else {
+            const currentDate = new Date();
+            const dob = new Date(data.dateOfBirth);
+            const minAgeDate = new Date(currentDate.getFullYear() - 15, currentDate.getMonth(), currentDate.getDate()); // 15 years ago from today
+    
+            if (dob > minAgeDate) {
+                errors.dateOfBirth = 'Date of birth must be at least 15 years ago';
+            }
+        }
+        
         if (!data.gender) errors.gender = 'Gender is required';
         if (!data.status) errors.status = 'Status is required';
         if (data.roles.length === 0) errors.roles = ['At least one role is required'];
@@ -71,7 +91,7 @@ const FormValidationEdit: React.FC = () => {
     return (
         <div>
             <h1>Employee Form</h1>
-            <form onSubmit={handleSubmit}>
+            <form onChange={handleSubmit}>
                 <TextField
                     label="First Name"
                     name="firstName"
@@ -154,9 +174,9 @@ const FormValidationEdit: React.FC = () => {
                         onChange={handleChange}
                         renderValue={(selected) => (selected as string[]).join(', ')}
                     >
-                        {GlobalStore.roles.map((role, index) => (
+                        {/* {GlobalStore.roles.map((role, index) => (
                             <MenuItem key={index} value={role.roleId}>{role.roleName}</MenuItem>
-                        ))}
+                        ))} */}
 
                     </Select>
                 </FormControl>
