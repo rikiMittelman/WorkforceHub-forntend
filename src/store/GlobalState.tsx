@@ -8,19 +8,23 @@ class GlobalStore {
   employees: Employee[] = [];
   rolesList: Role[] = [];
   loading: boolean = true;
+  isNewEmployee: boolean = true;
   selectedEmployee: Employee = {
     id: -1,
     firstName: '',
     lastName: '',
     identity: '',
-    startWorkDate: new Date(),
-    dateOfBirth: new Date(),
-    gender: Gender.Male,
+    startWorkDate: null,
+    dateOfBirth: null,
+    gender: null,
     status: true,
     roles: []
   };
   setSelectedEmployee = (emp: Employee) => {
     this.selectedEmployee = emp;
+  }
+  setIsNewEmployee = (isNew: boolean) => {
+    this.isNewEmployee = isNew;
   }
   //   filteredEmployees: Employee[] = [];
   //   searchQuery: string = '';
@@ -29,26 +33,27 @@ class GlobalStore {
     makeAutoObservable(this, {
       employees: observable,
       selectedEmployee: observable,
+      isNewEmployee: observable,
+      setIsNewEmployee: action,
       setSelectedEmployee: action,
       rolesList: observable,
       addEmployee: action,
       deleteEmployee: action,
-      editEmployee: action,
       getEmployees: action,
       getAllRoles: action,
       saveChanges: action,
-      loading : observable
-        });
+      loading: observable
+    });
   }
 
-  
+
   addEmployee() {
     this.loading = true;
     try {
-      addNewEmployee(this.selectedEmployee); 
-      if(this.selectedEmployee.status)// Call the API function
+      addNewEmployee(this.selectedEmployee);
+      if (this.selectedEmployee.status)// Call the API function
       {
-        this.employees.push(this.selectedEmployee); 
+        this.employees.push(this.selectedEmployee);
       }// Update the local state if needed}
     } catch (error) {
       console.error('Error adding employee:', error);
@@ -64,9 +69,9 @@ class GlobalStore {
 
     try {
       handleUpdateEmployee(this.selectedEmployee, this.selectedEmployee.id);
-      const index = this.employees.findIndex(emp => emp.id ===  this.selectedEmployee.id);
+      const index = this.employees.findIndex(emp => emp.id === this.selectedEmployee.id);
       if (index !== -1) {
-        this.employees[index] =  this.selectedEmployee;
+        this.employees[index] = this.selectedEmployee;
       }
     }
     catch (error) {
@@ -83,8 +88,8 @@ class GlobalStore {
     this.loading = true;
 
     try {
-    handleDeleteItem(this.selectedEmployee.id);
-    this.employees = this.employees.filter(e => e.id != this.selectedEmployee.id);
+      handleDeleteItem(this.selectedEmployee.id);
+      this.employees = this.employees.filter(e => e.id != this.selectedEmployee.id);
     } catch { }
     finally {
       action(() => {

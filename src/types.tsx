@@ -3,9 +3,9 @@ export interface Employee {
     firstName: string;
     lastName: string;
     identity: string;
-    startWorkDate: Date;
-    dateOfBirth: Date;
-    gender: Gender;
+    startWorkDate: Date | null;
+    dateOfBirth: Date | null;
+    gender: Gender | null;
     roles: EmployeeRole[];
     status: boolean;
   }
